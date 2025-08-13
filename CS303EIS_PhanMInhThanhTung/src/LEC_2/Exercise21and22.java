@@ -1,4 +1,4 @@
-package cs303eis_phanminhthanhtung;
+package LEC_2;
 
 public class Exercise21and22 {
     
