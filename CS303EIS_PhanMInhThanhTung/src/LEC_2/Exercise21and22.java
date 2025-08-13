@@ -13,7 +13,7 @@ public class Exercise21and22 {
         
         //Exercise 22
         int x2 = 1;
-        int y2 = x2 - x2-- - x2++ + x2-- - x2 + x2-- + x2;
+        int y2 = x2 - x2-- - x2++ + --x2 - x2 + x2-- + x2;
         System.out.println("x = " + x2);
         System.out.println("y = " + y2);
     }
