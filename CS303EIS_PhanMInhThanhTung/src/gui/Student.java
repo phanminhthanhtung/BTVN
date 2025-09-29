@@ -1,11 +1,9 @@
 package gui;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 
-public class Student implements Serializable {
+public class Student {
 
     private String ID;
     private String fullName;
@@ -64,7 +62,7 @@ public class Student implements Serializable {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return String.format("ID: %s | Name: %s | Date: %s | Gender: %s | GPA: %.2f",
+        return String.format("ID: %s \n Name: %s \n Date: %s \n Gender: %s \n GPA: %.2f",
                 ID, fullName, sdf.format(date), gender, GPA);
     }
 }
