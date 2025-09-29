@@ -26,7 +26,7 @@ public class MainFrame extends JFrame {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
         table.setRowSorter(sorter);
         sorter.setSortKeys(Arrays.asList(
-                new RowSorter.SortKey(4, SortOrder.DESCENDING)
+                new RowSorter.SortKey(1, SortOrder.ASCENDING)
         ));
         loadTable();
         JScrollPane scrollPane = new JScrollPane(table);
@@ -171,13 +171,14 @@ public class MainFrame extends JFrame {
     private void saveFile() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("TXT Files",
-                ".txt"));
+                "txt"));
         int res = fileChooser.showSaveDialog(null);
-        String fName = fileChooser.getSelectedFile().getAbsolutePath();
-        if (!fName.toLowerCase().endsWith(".txt")) {
-            fName += ".txt";
-        }
+
         if (res == JFileChooser.APPROVE_OPTION) {
+            String fName = fileChooser.getSelectedFile().getAbsolutePath();
+            if (!fName.toLowerCase().endsWith(".txt")) {
+                fName += ".txt";
+            }
             manager.saveToFile(fName);
             JOptionPane.showMessageDialog(this, "Saved " + fName + " successfully");
         }
@@ -186,7 +187,7 @@ public class MainFrame extends JFrame {
     private void loadFile() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("TXT Files",
-                ".txt"));
+                "txt"));
 
         int res = fileChooser.showOpenDialog(null);
         if (res == JFileChooser.APPROVE_OPTION) {
