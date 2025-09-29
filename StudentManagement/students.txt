@@ -1,0 +1,4 @@
+456,Doan Viet Quang,05/10/2006,Male,3.6
+678,Ho Nhat Minh,06/07/2006,Male,3.9
+123,Phan Minh Thanh Tung,23/07/2006,Male,3.7
+789,Nguyen Ngoc Anh,10/10/2006,Female,3.2
