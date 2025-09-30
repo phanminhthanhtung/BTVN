@@ -9,14 +9,14 @@ public class Student {
     private String fullName;
     private Date date;
     private String gender;
-    private double GPA;
+    private String email;
 
-    public Student(String ID, String fullName, Date date, String gender, double GPA) {
+    public Student(String ID, String fullName, Date date, String gender, String email) {
         this.ID = ID;
         this.fullName = fullName;
         this.date = date;
         this.gender = gender;
-        this.GPA = GPA;
+        this.email = email;
     }
 
     public String getID() {
@@ -27,12 +27,12 @@ public class Student {
         this.ID = ID;
     }
 
-    public double getGPA() {
-        return GPA;
+    public String getEmail() {
+        return email;
     }
 
-    public void setGPA(double GPA) {
-        this.GPA = GPA;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setFullName(String fullName) {
@@ -63,6 +63,6 @@ public class Student {
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return String.format("ID: %s \n Name: %s \n Date: %s \n Gender: %s \n GPA: %.2f",
-                ID, fullName, sdf.format(date), gender, GPA);
+                ID, fullName, sdf.format(date), gender, email);
     }
 }

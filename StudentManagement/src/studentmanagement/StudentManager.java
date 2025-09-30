@@ -43,7 +43,7 @@ public final class StudentManager {
             for (Student s : list) {
                 bw.write(s.getID() + "," + s.getFullName() + ","
                         + sdf.format(s.getDate()) + ","
-                        + s.getGender() + "," + s.getGPA() + "\n");
+                        + s.getGender() + "," + s.getEmail()+ "\n");
             }
             bw.close();
         } catch (IOException e) {
@@ -65,9 +65,9 @@ public final class StudentManager {
                         String name = parts[1];
                         Date date = sdf.parse(parts[2]);
                         String gender = parts[3];
-                        double gpa = Double.parseDouble(parts[4]);
+                        String email = parts[4];
                         if (findStudent(id) == null) {
-                            list.add(new Student(id, name, date, gender, gpa));
+                            list.add(new Student(id, name, date, gender, email));
                         }
                     }
                 }

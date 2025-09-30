@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
         setSize(700, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        tableModel = new DefaultTableModel(new Object[]{"ID", "Name", "Date", "Gender", "GPA",}, 0);
+        tableModel = new DefaultTableModel(new Object[]{"ID", "Name", "Date", "Gender", "Email",}, 0);
         table = new JTable(tableModel);
         table.setDefaultEditor(Object.class, null);
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tableModel);
@@ -61,7 +61,7 @@ public class MainFrame extends JFrame {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         tableModel.setRowCount(0);
         for (Student s : manager.getAll()) {
-            tableModel.addRow(new Object[]{s.getID(), s.getFullName(), sdf.format(s.getDate()), s.getGender(), s.getGPA()});
+            tableModel.addRow(new Object[]{s.getID(), s.getFullName(), sdf.format(s.getDate()), s.getGender(), s.getEmail()});
         }
     }
 
@@ -72,7 +72,7 @@ public class MainFrame extends JFrame {
         JTextField nameField = new JTextField(15);
         JTextField dateField = new JTextField(15);
         JComboBox<String> genderBox = new JComboBox<>(new String[]{"Male", "Female", "Other"});
-        JTextField gpaField = new JTextField(15);
+        JTextField emailField = new JTextField(15);
 
         if (existingStudent != null) {
             idField.setText(existingStudent.getID());
@@ -80,7 +80,7 @@ public class MainFrame extends JFrame {
             nameField.setText(existingStudent.getFullName());
             dateField.setText(sdf.format(existingStudent.getDate()));
             genderBox.setSelectedItem(existingStudent.getGender());
-            gpaField.setText(String.valueOf(existingStudent.getGPA()));
+            emailField.setText(existingStudent.getEmail());
         }
 
         JPanel panel = new JPanel(new GridLayout(6, 2, 10, 10));
@@ -92,8 +92,8 @@ public class MainFrame extends JFrame {
         panel.add(dateField);
         panel.add(new JLabel("Gender:"));
         panel.add(genderBox);
-        panel.add(new JLabel("GPA:"));
-        panel.add(gpaField);
+        panel.add(new JLabel("Email:"));
+        panel.add(emailField);
 
         int result = JOptionPane.showConfirmDialog(
                 this, panel,
@@ -108,15 +108,18 @@ public class MainFrame extends JFrame {
                 String name = nameField.getText().trim();
                 Date date = sdf.parse(dateField.getText().trim());
                 String gender = (String) genderBox.getSelectedItem();
-                double gpa = Double.parseDouble(gpaField.getText().trim());
-
-                if (existingStudent == null) {
-                    manager.addStudent(new Student(id, name, date, gender, gpa));
+                String email = emailField.getText().trim();
+                if (!email.contains("@gmail.com")) {
+                    JOptionPane.showMessageDialog(this, "Invalid email input");
                 } else {
-                    existingStudent.setFullName(name);
-                    existingStudent.setDate(date);
-                    existingStudent.setGender(gender);
-                    existingStudent.setGPA(gpa);
+                    if (existingStudent == null) {
+                        manager.addStudent(new Student(id, name, date, gender, email));
+                    } else {
+                        existingStudent.setFullName(name);
+                        existingStudent.setDate(date);
+                        existingStudent.setGender(gender);
+                        existingStudent.setEmail(email);
+                    }
                 }
                 loadTable();
             } catch (ParseException e) {
@@ -138,6 +141,9 @@ public class MainFrame extends JFrame {
             Student s = manager.findStudent(id);
             if (s != null) {
                 showStudentForm(s);
+                JOptionPane.showMessageDialog(this, "Updated successfully");
+            } else{
+                JOptionPane.showMessageDialog(this, "Updated failed");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Choose a student to edit");
