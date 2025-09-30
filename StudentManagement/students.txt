@@ -1,4 +1,3 @@
 456,Doan Viet Quang,05/10/2006,Male,doanvietquang@gmail.com
 678,Ho Nhat Minh,06/07/2006,Male,honhatminh@gmail.com
-123,Phan Minh Thanh Tung,23/07/2006,Male,phanminhthanhtung@gmail.com
 789,Nguyen Ngoc Anh,10/10/2006,Female,nguyenngocanh@gmail.com

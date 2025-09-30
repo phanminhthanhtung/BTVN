@@ -65,7 +65,7 @@ public class MainFrame extends JFrame {
         }
     }
 
-    private void showStudentForm(Student existingStudent) {
+    private boolean showStudentForm(Student existingStudent) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         JTextField idField = new JTextField(15);
@@ -109,8 +109,9 @@ public class MainFrame extends JFrame {
                 Date date = sdf.parse(dateField.getText().trim());
                 String gender = (String) genderBox.getSelectedItem();
                 String email = emailField.getText().trim();
-                if (!email.contains("@gmail.com")) {
-                    JOptionPane.showMessageDialog(this, "Invalid email input");
+                if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+                    JOptionPane.showMessageDialog(this, "Invalid email input", "Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
                 } else {
                     if (existingStudent == null) {
                         manager.addStudent(new Student(id, name, date, gender, email));
@@ -122,12 +123,12 @@ public class MainFrame extends JFrame {
                     }
                 }
                 loadTable();
+                return true;
             } catch (ParseException e) {
                 JOptionPane.showMessageDialog(this, "Invalid date! Use dd/MM/yyyy", "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Invalid GPA!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            } 
         }
+        return false;
     }
 
     private void addStudent() {
@@ -137,13 +138,16 @@ public class MainFrame extends JFrame {
     private void editStudent() {
         int row = table.getSelectedRow();
         if (row >= 0) {
-            String id = (String) tableModel.getValueAt(row, 0);
+            int modelRow = table.convertRowIndexToModel(row);
+            String id = (String) tableModel.getValueAt(modelRow, 0);
             Student s = manager.findStudent(id);
             if (s != null) {
-                showStudentForm(s);
-                JOptionPane.showMessageDialog(this, "Updated successfully");
-            } else{
-                JOptionPane.showMessageDialog(this, "Updated failed");
+                boolean updated = showStudentForm(s);
+                if (updated) {
+                    JOptionPane.showMessageDialog(this, "Updated successfully");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Updated cancelled");
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Choose a student to edit");
@@ -151,14 +155,14 @@ public class MainFrame extends JFrame {
     }
 
     private void deleteStudent() {
-        int row = table.getSelectedRow();
-        if (row >= 0) {
-            String id = (String) tableModel.getValueAt(row, 0);
-            manager.removeStudent(id);
-            JOptionPane.showMessageDialog(this, "Deleted successfully");
-            loadTable();
-        } else {
-            JOptionPane.showMessageDialog(this, "Choose a student to delete");
+        String id = JOptionPane.showInputDialog(this, "Enter student ID to delete: ");
+        if (id != null && !id.trim().isEmpty()) {
+            boolean s = manager.removeStudent(id);
+            if (!s) {
+                JOptionPane.showMessageDialog(this, "Student not found");
+            } else {
+                JOptionPane.showMessageDialog(this, "Delete Successfully");
+            }
         }
     }
 

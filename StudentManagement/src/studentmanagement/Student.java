@@ -62,7 +62,7 @@ public class Student {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return String.format("ID: %s \n Name: %s \n Date: %s \n Gender: %s \n GPA: %.2f",
+        return String.format("ID: %s \n Name: %s \n Date: %s \n Gender: %s \n Email: %s",
                 ID, fullName, sdf.format(date), gender, email);
     }
 }

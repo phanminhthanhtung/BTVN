@@ -19,9 +19,10 @@ public final class StudentManager {
         saveFromDefaultFile();
     }
 
-    public void removeStudent(String id) {
-        list.removeIf(s -> s.getID().equalsIgnoreCase(id));
-        saveFromDefaultFile();
+    public boolean removeStudent(String id) {
+        boolean result = list.removeIf(s -> s.getID().equalsIgnoreCase(id));
+        if (result) saveFromDefaultFile();
+        return result;
     }
 
     public Student findStudent(String id) {
